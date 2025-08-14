@@ -545,11 +545,8 @@
                 const startDate = new Date(season.startDate);
                 const endDate = new Date(season.endDate);
 
-                // 시작일이 목요일인지 확인하고 조정
+                // 시작일을 그대로 사용 (목요일이든 아니든)
                 let thursdayDate = new Date(startDate);
-                while (thursdayDate.getDay() !== 4) { // 4 = 목요일
-                    thursdayDate.setDate(thursdayDate.getDate() - 1);
-                }
 
                 // 각 요일별 날짜 계산
                 const fridayDate = new Date(thursdayDate);
