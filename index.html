@@ -452,7 +452,7 @@
                                     endDate: endDate,
                                     daysDiff: daysDiff,
                                     hasPeakTime: hasPeakTime,
-                                    seasonNumber: seasons.length + 1
+                                    seasonNumber: seasonNumberMatch ? parseInt(seasonNumberMatch) : seasons.length + 1
                                 };
                                 seasons.push(currentSeason);
                                 console.log(`시즌 ${currentSeason.seasonNumber} 추가:`, currentSeason);
@@ -493,12 +493,15 @@
                                 const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
                                 const hasPeakTime = daysDiff >= 5;
 
+                                // 시즌 번호 찾기 (숫자만 있는 부분)
+                                const seasonNumberMatch = parts.find(part => /^\d+$/.test(part));
+
                                 currentSeason = {
                                     startDate: startDate,
                                     endDate: endDate,
                                     daysDiff: daysDiff,
                                     hasPeakTime: hasPeakTime,
-                                    seasonNumber: seasons.length + 1
+                                    seasonNumber: seasonNumberMatch ? parseInt(seasonNumberMatch) : seasons.length + 1
                                 };
                                 seasons.push(currentSeason);
                                 console.log(`시즌 ${currentSeason.seasonNumber} 추가:`, currentSeason);
