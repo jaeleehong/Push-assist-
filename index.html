@@ -415,12 +415,12 @@
 
                     console.log(`라인 ${i + 1}:`, line);
 
-                    // race_chocolate 형식 처리
-                    if (line.includes('race_chocolate')) {
+                    // race_ 키워드가 포함된 형식 처리 (race_chocolate, race_acorn, race_thanksgiving24 등)
+                    if (line.includes('race_')) {
                         const parts = line.split(/\s+/).map(part => part.trim()).filter(part => part);
-                        console.log(`race_chocolate 라인 ${i + 1} 분리 결과:`, parts);
+                        console.log(`race_ 라인 ${i + 1} 분리 결과:`, parts);
 
-                        // race_chocolate 다음에 오는 숫자 찾기 (시즌 번호)
+                        // race_ 다음에 오는 숫자 찾기 (시즌 번호)
                         const seasonNumberMatch = parts.find(part => /^\d+$/.test(part));
                         if (seasonNumberMatch) {
                             console.log(`시즌 번호 발견: ${seasonNumberMatch}`);
@@ -434,14 +434,14 @@
                             return dateTimePattern.test(part) || dateOnlyPattern.test(part);
                         });
 
-                        console.log(`race_chocolate 라인 ${i + 1} 날짜 컬럼:`, dateColumns);
+                        console.log(`race_ 라인 ${i + 1} 날짜 컬럼:`, dateColumns);
 
                         if (dateColumns.length >= 2) {
                             // 첫 번째와 두 번째 날짜를 시작일과 종료일로 사용
                             const startDate = this.parseSimpleDate(dateColumns[0]);
                             const endDate = this.parseSimpleDate(dateColumns[1]);
 
-                            console.log(`race_chocolate 라인 ${i + 1} 파싱된 날짜:`, { startDate, endDate });
+                            console.log(`race_ 라인 ${i + 1} 파싱된 날짜:`, { startDate, endDate });
 
                             if (startDate && endDate) {
                                 const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
@@ -563,16 +563,16 @@
                     // 5일 이상 운영 시
                     const day1 = new Date(startDateObj);
                     day1.setDate(startDateObj.getDate() + 1);
-                    
+
                     const day2 = new Date(startDateObj);
                     day2.setDate(startDateObj.getDate() + 2);
-                    
+
                     const day3 = new Date(startDateObj);
                     day3.setDate(startDateObj.getDate() + 3);
-                    
+
                     const day4 = new Date(startDateObj);
                     day4.setDate(startDateObj.getDate() + 4);
-                    
+
                     messages.push(
                         // 순위 하락 알림 (시작일+1, 시작일+2, 시작일+3 오후 1시)
                         {
@@ -629,10 +629,10 @@
                     // 3일 운영 시
                     const day1 = new Date(startDateObj);
                     day1.setDate(startDateObj.getDate() + 1);
-                    
+
                     const day2 = new Date(startDateObj);
                     day2.setDate(startDateObj.getDate() + 2);
-                    
+
                     messages.push(
                         // 순위 하락 알림 (시작일+1, 시작일+2 오후 1시)
                         {
