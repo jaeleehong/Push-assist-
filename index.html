@@ -322,8 +322,22 @@
                     const line = lines[i].trim();
                     if (!line) continue;
 
-                    const parts = line.split('\t');
-                    console.log(`라인 ${i + 1}:`, parts);
+                    console.log(`라인 ${i + 1} 원본:`, line);
+
+                    // 다양한 구분자로 분리 (탭, 연속된 공백, 콤마)
+                    let parts = [];
+                    if (line.includes('\t')) {
+                        // 탭이 있으면 탭으로 분리
+                        parts = line.split('\t').map(part => part.trim()).filter(part => part);
+                    } else if (line.includes(',')) {
+                        // 콤마가 있으면 콤마로 분리
+                        parts = line.split(',').map(part => part.trim()).filter(part => part);
+                    } else {
+                        // 연속된 공백으로 분리
+                        parts = line.split(/\s+/).map(part => part.trim()).filter(part => part);
+                    }
+
+                    console.log(`라인 ${i + 1} 분리 결과:`, parts);
 
                     // 첫 줄이 제목인지 확인 (race_로 시작하고 실제 날짜가 없는 경우만 제외)
                     if (i === 0 && parts.some(part => part.includes('race_')) && !parts.some(part => /\d{1,2}\/\d{1,2}/.test(part))) {
@@ -392,14 +406,26 @@
             }
 
             parseSimpleDate(dateStr) {
-                const match = dateStr.match(/^(\d{1,2})\/(\d{1,2})/);
-                if (!match) return null;
+                console.log('날짜 파싱 시작:', dateStr);
+                
+                // 다양한 날짜 형식 지원
+                let match = dateStr.match(/^(\d{1,2})\/(\d{1,2})/);
+                if (!match) {
+                    // 다른 형식 시도 (예: 9-26, 9.26 등)
+                    match = dateStr.match(/^(\d{1,2})[-\/\.](\d{1,2})/);
+                }
+                
+                if (!match) {
+                    console.log('날짜 형식을 인식할 수 없음:', dateStr);
+                    return null;
+                }
 
                 const month = parseInt(match[1]) - 1;
                 const day = parseInt(match[2]);
                 const year = 2025; // 2025년으로 고정
 
                 const date = new Date(year, month, day);
+                console.log('파싱된 날짜 객체:', date);
                 return date;
             }
 
