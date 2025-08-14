@@ -412,15 +412,22 @@
                 const startDate = new Date(season.startDate);
                 const endDate = new Date(season.endDate);
 
-                // 시작일을 기준으로 정확한 요일 계산
-                const startDay = startDate.getDay(); // 0=일요일, 1=월요일, ..., 6=토요일
+                console.log(`시즌 ${season.seasonNumber} 처리:`, {
+                    startDate: startDate,
+                    endDate: endDate,
+                    startDateFormatted: this.formatDate(startDate),
+                    endDateFormatted: this.formatDate(endDate)
+                });
 
-                // 시작일부터 각 요일까지의 날짜 계산
+                // 각 시즌의 실제 시작일과 종료일을 사용
                 const thursdayDate = new Date(startDate);
                 const fridayDate = new Date(startDate);
                 const saturdayDate = new Date(startDate);
                 const sundayDate = new Date(startDate);
                 const mondayDate = new Date(startDate);
+
+                // 시작일부터 각 요일까지의 날짜 계산
+                const startDay = startDate.getDay(); // 0=일요일, 1=월요일, ..., 6=토요일
 
                 // 시작일이 목요일이 아닌 경우, 다음 목요일을 찾기
                 if (startDay !== 4) { // 4 = 목요일
@@ -437,6 +444,14 @@
                     sundayDate.setDate(startDate.getDate() + 3);
                     mondayDate.setDate(startDate.getDate() + 4);
                 }
+
+                console.log(`시즌 ${season.seasonNumber} 계산된 날짜:`, {
+                    thursday: this.formatDate(thursdayDate),
+                    friday: this.formatDate(fridayDate),
+                    saturday: this.formatDate(saturdayDate),
+                    sunday: this.formatDate(sundayDate),
+                    monday: this.formatDate(mondayDate)
+                });
 
                 // 1. 시작 푸시 (목요일 오후 6시)
                 messages.push({
