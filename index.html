@@ -377,7 +377,14 @@ class SeasonRacePushGenerator {
         }
 
         try {
+            console.log('Input text:', planningText); // 디버깅용
             const seasons = this.parsePlanningText(planningText);
+            
+            if (seasons.length === 0) {
+                alert('기획서 텍스트에서 시즌 정보를 찾을 수 없습니다. 텍스트 형식을 확인해주세요.');
+                return;
+            }
+            
             const pushMessages = this.generatePushMessagesForSeasons(seasons, themeKeyword);
             this.currentPushMessages = pushMessages; // CSV 생성을 위해 데이터 저장
             this.displayResults(pushMessages);
@@ -394,20 +401,36 @@ class SeasonRacePushGenerator {
         let seasonCount = 1; // 1회차부터 시작
 
         for (const line of lines) {
+            console.log('Processing line:', line); // 디버깅용
+            
             // 시즌 번호가 있는 라인 찾기 (숫자로 시작하는 라인)
             const seasonMatch = line.match(/^\s*(\d+)\s+/);
             if (seasonMatch) {
-                // 모든 컬럼을 분리 (빈 컬럼 포함)
-                const allColumns = line.split('\t');
+                console.log('Found season line:', line); // 디버깅용
+                
+                // 여러 가지 구분자로 시도
+                let allColumns = [];
+                
+                // 1. 탭으로 분리 시도
+                if (line.includes('\t')) {
+                    allColumns = line.split(/\t+/).map(col => col.trim()).filter(col => col);
+                }
+                // 2. 공백으로 분리 시도 (연속된 공백을 하나로 처리)
+                else {
+                    allColumns = line.split(/\s+/).map(col => col.trim()).filter(col => col);
+                }
+                
+                console.log('Split columns:', allColumns); // 디버깅용
                 
                 // 날짜+시간 형식과 날짜만 있는 형식 모두 처리
                 const dateTimePattern = /^\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}$/;
                 const dateOnlyPattern = /^\d{1,2}\/\d{1,2}$/;
                 
                 const dateColumns = allColumns.filter(col => {
-                    const trimmed = col.trim();
-                    return dateTimePattern.test(trimmed) || dateOnlyPattern.test(trimmed);
+                    return dateTimePattern.test(col) || dateOnlyPattern.test(col);
                 });
+                
+                console.log('Found date columns:', dateColumns); // 디버깅용
                 
                 if (dateColumns.length >= 4) {
                     let eventStartDate, eventEndDate, rewardStartDate, rewardEndDate;
@@ -426,6 +449,8 @@ class SeasonRacePushGenerator {
                         rewardStartDate = dateColumns[2];
                         rewardEndDate = dateColumns[3];
                     }
+                    
+                    console.log('Parsed dates:', { eventStartDate, eventEndDate, rewardStartDate, rewardEndDate }); // 디버깅용
                     
                     // 운영 기간 계산 (이벤트 시작일부터 이벤트 종료일까지)
                     const eventStart = this.parseSimpleDate(eventStartDate);
@@ -447,6 +472,7 @@ class SeasonRacePushGenerator {
             }
         }
 
+        console.log('Parsed seasons:', seasons); // 디버깅용
         return seasons;
     }
 
