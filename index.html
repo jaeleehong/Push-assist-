@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +24,7 @@
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
@@ -103,7 +104,7 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .btn:disabled {
@@ -116,7 +117,7 @@
             background: white;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             display: none;
         }
 
@@ -178,6 +179,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header class="header">
@@ -187,9 +189,13 @@
 
         <div class="main-content">
             <div class="input-section">
-                <div id="exampleSection" style="margin-bottom: 30px; padding: 25px; background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%); border: 2px solid #4CAF50; border-radius: 15px; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);">
-                    <h3 style="color: #2e7d32; margin-bottom: 20px; font-size: 1.4em; border-bottom: 2px solid #4CAF50; padding-bottom: 10px;">📋 사용방법</h3>
-                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <div id="exampleSection"
+                    style="margin-bottom: 30px; padding: 25px; background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%); border: 2px solid #4CAF50; border-radius: 15px; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);">
+                    <h3
+                        style="color: #2e7d32; margin-bottom: 20px; font-size: 1.4em; border-bottom: 2px solid #4CAF50; padding-bottom: 10px;">
+                        📋 사용방법</h3>
+                    <div
+                        style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                         <ol style="margin: 10px 0; padding-left: 20px; line-height: 1.8;">
                             <li><strong>주제어 입력</strong>: 해당 월의 시즌레이스 주제를 입력하세요 (예: 더위사냥, 로맨틱, 추석맞고 등)</li>
                             <li><strong>기획서 복사</strong>: 엑셀 기획서에서 날짜가 포함된 부분을 복사하세요</li>
@@ -197,9 +203,12 @@
                             <li><strong>생성</strong>: "푸시 메시지 생성" 버튼을 클릭하세요</li>
                         </ol>
                     </div>
-                    
-                    <h3 style="color: #2e7d32; margin-bottom: 20px; font-size: 1.4em; border-bottom: 2px solid #4CAF50; padding-bottom: 10px;">🎯 자동 생성되는 메시지</h3>
-                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+
+                    <h3
+                        style="color: #2e7d32; margin-bottom: 20px; font-size: 1.4em; border-bottom: 2px solid #4CAF50; padding-bottom: 10px;">
+                        🎯 자동 생성되는 메시지</h3>
+                    <div
+                        style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                         <ul style="margin: 10px 0; padding-left: 20px; line-height: 1.8;">
                             <li><strong>시작 푸시</strong>: 목요일 오후 6시 (전체 대상)</li>
                             <li><strong>순위 하락 알림</strong>: 금,토,일 오후 1시, 7시 (정보분석대상자)</li>
@@ -208,19 +217,28 @@
                             <li><strong>보상 지급</strong>: 월요일 오후 5시 (정보분석대상자)</li>
                         </ul>
                     </div>
-                    
-                    <h3 style="color: #2e7d32; margin-bottom: 20px; font-size: 1.4em; border-bottom: 2px solid #4CAF50; padding-bottom: 10px;">📝 기획서 예시</h3>
-                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 14px; margin: 10px 0; border: 1px solid #dee2e6;">
-                            24/9월 점검	race_halloween	120	9/26 18:00	9/30 10:00	9/26 18:00	9/30 0:00	9/28 20:00	9/28 23:00	9/30 17:00	10/2 10:00<br>
-                            							9/29 20:00	9/29 23:00		<br>
-                            	race_halloween	121	10/3 18:00	10/7 10:00	10/3 18:00	10/7 0:00	10/5 20:00	10/5 23:00	10/7 17:00	10/9 10:00<br>
-                            							10/6 20:00	10/6 23:00		<br>
-                            	race_halloween	122	10/10 18:00	10/14 10:00	10/10 18:00	10/14 0:00	10/12 20:00	10/12 23:00	10/14 17:00	10/16 10:00<br>
-                            							10/13 20:00	10/13 23:00		<br>
-                            	race_halloween	123	10/17 18:00	10/21 10:00	10/17 18:00	10/21 0:00	10/19 20:00	10/19 23:00	10/21 17:00	10/23 10:00<br>
-                            							10/20 20:00	10/20 23:00		<br>
-                            	race_halloween	124	10/24 18:00	10/26 10:00	10/24 18:00	10/26 0:00	10/25 20:00	10/26 0:00	10/27 17:00	10/28 10:00
+
+                    <h3
+                        style="color: #2e7d32; margin-bottom: 20px; font-size: 1.4em; border-bottom: 2px solid #4CAF50; padding-bottom: 10px;">
+                        📝 기획서 예시</h3>
+                    <div
+                        style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div
+                            style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 14px; margin: 10px 0; border: 1px solid #dee2e6;">
+                            24/9월 점검 race_halloween 120 9/26 18:00 9/30 10:00 9/26 18:00 9/30 0:00 9/28 20:00 9/28 23:00
+                            9/30 17:00 10/2 10:00<br>
+                            9/29 20:00 9/29 23:00 <br>
+                            race_halloween 121 10/3 18:00 10/7 10:00 10/3 18:00 10/7 0:00 10/5 20:00 10/5 23:00 10/7
+                            17:00 10/9 10:00<br>
+                            10/6 20:00 10/6 23:00 <br>
+                            race_halloween 122 10/10 18:00 10/14 10:00 10/10 18:00 10/14 0:00 10/12 20:00 10/12 23:00
+                            10/14 17:00 10/16 10:00<br>
+                            10/13 20:00 10/13 23:00 <br>
+                            race_halloween 123 10/17 18:00 10/21 10:00 10/17 18:00 10/21 0:00 10/19 20:00 10/19 23:00
+                            10/21 17:00 10/23 10:00<br>
+                            10/20 20:00 10/20 23:00 <br>
+                            race_halloween 124 10/24 18:00 10/26 10:00 10/24 18:00 10/26 0:00 10/25 20:00 10/26 0:00
+                            10/27 17:00 10/28 10:00
                         </div>
                     </div>
                 </div>
@@ -232,7 +250,8 @@
 
                 <div class="form-group">
                     <label for="planningText">기획서 텍스트:</label>
-                    <textarea id="planningText" placeholder="24/9월 점검	race_halloween	120	9/26 18:00	9/30 10:00	9/26 18:00	9/30 0:00	9/28 20:00	9/28 23:00	9/30 17:00	10/2 10:00
+                    <textarea id="planningText"
+                        placeholder="24/9월 점검	race_halloween	120	9/26 18:00	9/30 10:00	9/26 18:00	9/30 0:00	9/28 20:00	9/28 23:00	9/30 17:00	10/2 10:00
 							9/29 20:00	9/29 23:00		
 	race_halloween	121	10/3 18:00	10/7 10:00	10/3 18:00	10/7 0:00	10/5 20:00	10/5 23:00	10/7 17:00	10/9 10:00
 							10/6 20:00	10/6 23:00		
@@ -245,7 +264,7 @@
 
                 <button id="generateBtn" class="btn">푸시 메시지 생성</button>
                 <button id="clearBtn" class="btn">초기화</button>
-                
+
                 <div id="status" class="status info" style="display: none;"></div>
             </div>
 
@@ -326,19 +345,34 @@
                     if (dateColumns.length >= 2) {
                         const startDate = this.parseSimpleDate(dateColumns[0]);
                         const endDate = this.parseSimpleDate(dateColumns[1]);
-                        
+
                         console.log('파싱된 날짜:', startDate, endDate);
-                        
+
                         if (startDate && endDate) {
                             const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
                             const hasPeakTime = daysDiff >= 5;
+
+                            // 시즌 번호 찾기 (3자리 숫자)
+                            let seasonNumber = seasons.length + 1; // 기본값
+
+                            // 각 파트에서 3자리 숫자 찾기
+                            for (let part of parts) {
+                                const trimmed = part.trim();
+                                // 3자리 숫자 패턴 찾기 (100-999)
+                                const seasonMatch = trimmed.match(/^(\d{3})$/);
+                                if (seasonMatch) {
+                                    seasonNumber = parseInt(seasonMatch[1]);
+                                    console.log(`시즌 번호 발견: ${seasonNumber}`);
+                                    break;
+                                }
+                            }
 
                             currentSeason = {
                                 startDate: startDate,
                                 endDate: endDate,
                                 daysDiff: daysDiff,
                                 hasPeakTime: hasPeakTime,
-                                seasonNumber: seasons.length + 1
+                                seasonNumber: seasonNumber
                             };
                             seasons.push(currentSeason);
                             console.log(`시즌 ${currentSeason.seasonNumber} 추가:`, currentSeason);
@@ -357,19 +391,19 @@
                 const month = parseInt(match[1]) - 1;
                 const day = parseInt(match[2]);
                 const year = 2025; // 2025년으로 고정
-                
+
                 const date = new Date(year, month, day);
                 return date;
             }
 
             generatePushMessagesForSeasons(seasons, themeKeyword) {
                 const pushMessages = [];
-                
+
                 seasons.forEach(season => {
                     const messages = this.generateMessagesForSeason(season, themeKeyword);
                     pushMessages.push(...messages);
                 });
-                
+
                 return pushMessages;
             }
 
@@ -377,17 +411,17 @@
                 const messages = [];
                 const startDate = new Date(season.startDate);
                 const endDate = new Date(season.endDate);
-                
+
                 // 시작일을 기준으로 정확한 요일 계산
                 const startDay = startDate.getDay(); // 0=일요일, 1=월요일, ..., 6=토요일
-                
+
                 // 시작일부터 각 요일까지의 날짜 계산
                 const thursdayDate = new Date(startDate);
                 const fridayDate = new Date(startDate);
                 const saturdayDate = new Date(startDate);
                 const sundayDate = new Date(startDate);
                 const mondayDate = new Date(startDate);
-                
+
                 // 시작일이 목요일이 아닌 경우, 다음 목요일을 찾기
                 if (startDay !== 4) { // 4 = 목요일
                     const daysToAdd = (4 - startDay + 7) % 7;
@@ -536,7 +570,7 @@
 
             generatePushMessages() {
                 console.log('푸시 메시지 생성 시작');
-                
+
                 const themeKeyword = this.themeKeywordInput.value.trim();
                 const planningText = this.planningTextInput.value.trim();
 
@@ -553,19 +587,19 @@
                     const seasons = this.parsePlanningText(planningText);
                     console.log('파싱된 시즌 수:', seasons.length);
                     console.log('시즌 데이터:', seasons);
-                    
+
                     if (seasons.length === 0) {
                         this.showStatus('❌ 기획서에서 날짜를 찾을 수 없습니다. 형식을 확인해주세요.', 'error');
                         return;
                     }
-                    
+
                     const pushMessages = this.generatePushMessagesForSeasons(seasons, themeKeyword);
                     console.log('생성된 푸시 메시지 수:', pushMessages.length);
-                    
+
                     this.currentPushMessages = pushMessages;
                     this.displayResults(pushMessages);
                     this.resultSection.style.display = 'block';
-                    
+
                     this.showStatus(`✅ ${pushMessages.length}개의 푸시 메시지가 생성되었습니다!`, 'success');
                     console.log('푸시 메시지 생성 완료');
                 } catch (error) {
@@ -592,7 +626,7 @@
                 Object.keys(seasonGroups).forEach(season => {
                     const messages = seasonGroups[season];
                     const rowspan = messages.length;
-                    
+
                     messages.forEach((msg, index) => {
                         html += '<tr>';
                         if (index === 0) {
@@ -636,14 +670,14 @@
                 const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
                 const link = document.createElement('a');
                 const url = URL.createObjectURL(blob);
-                
+
                 link.setAttribute('href', url);
                 link.setAttribute('download', `시즌레이스_푸시메시지_${new Date().toISOString().split('T')[0]}.csv`);
                 link.style.visibility = 'hidden';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                
+
                 this.showStatus('✅ CSV 파일이 다운로드되었습니다!', 'success');
             }
 
@@ -651,10 +685,10 @@
                 if (!this.currentPushMessages || this.currentPushMessages.length === 0) {
                     return '';
                 }
-                
+
                 let csv = [];
                 csv.push('"차수","일자","발송일","대상","제목","내용","데이터"');
-                
+
                 this.currentPushMessages.forEach(msg => {
                     const row = [
                         `"${msg.season}"`,
@@ -667,7 +701,7 @@
                     ];
                     csv.push(row.join(','));
                 });
-                
+
                 return csv.join('\n');
             }
         }
@@ -678,7 +712,7 @@
             try {
                 const generator = new SeasonRacePushGenerator();
                 console.log('SeasonRacePushGenerator 초기화 완료');
-                
+
                 // 초기화 확인
                 if (generator.themeKeywordInput && generator.planningTextInput && generator.generateBtn) {
                     console.log('모든 요소가 정상적으로 로드됨');
@@ -694,7 +728,7 @@
         });
 
         // 전역 오류 핸들러
-        window.addEventListener('error', function(e) {
+        window.addEventListener('error', function (e) {
             console.error('전역 오류:', e.error);
             const status = document.getElementById('status');
             if (status) {
@@ -705,4 +739,5 @@
         });
     </script>
 </body>
+
 </html>
