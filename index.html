@@ -353,7 +353,7 @@
                             const hasPeakTime = daysDiff >= 5;
 
                             // 시즌 번호 찾기 (3자리 숫자)
-                            let seasonNumber = seasons.length + 1; // 기본값
+                            let seasonNumber = null;
 
                             // 각 파트에서 3자리 숫자 찾기
                             for (let part of parts) {
@@ -365,6 +365,12 @@
                                     console.log(`시즌 번호 발견: ${seasonNumber}`);
                                     break;
                                 }
+                            }
+
+                            // 3자리 숫자가 없으면 순차 번호 사용
+                            if (seasonNumber === null) {
+                                seasonNumber = seasons.length + 1;
+                                console.log(`3자리 숫자 없음, 순차 번호 사용: ${seasonNumber}`);
                             }
 
                             currentSeason = {
@@ -381,6 +387,7 @@
                 }
 
                 console.log('파싱된 시즌 수:', seasons.length);
+                console.log('최종 시즌 데이터:', seasons);
                 return seasons;
             }
 
