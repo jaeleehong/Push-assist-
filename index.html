@@ -382,6 +382,18 @@
                 try {
                     const seasons = this.parsePlanningText(planningText);
                     const pushMessages = this.generatePushMessagesForSeasons(seasons, themeKeyword);
+
+                    // 디버깅: 생성된 메시지 확인
+                    console.log('생성된 푸시 메시지:', pushMessages);
+                    pushMessages.forEach((msg, index) => {
+                        console.log(`메시지 ${index + 1}:`, {
+                            season: msg.season,
+                            date: msg.date,
+                            sendTime: msg.sendTime,
+                            title: msg.title
+                        });
+                    });
+
                     this.currentPushMessages = pushMessages; // CSV 생성을 위해 데이터 저장
                     this.displayResults(pushMessages);
                     this.resultSection.style.display = 'block';
