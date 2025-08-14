@@ -1,13 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>뉴맞고) 시즌레이스 푸시 메시지 자동 생성 도구</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>🎴 뉴맞고_ 시즌레이스 푸시 메시지 자동 생성 도구</title>
     <style>
         * {
             margin: 0;
@@ -16,7 +12,7 @@
         }
 
         body {
-            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
             min-height: 100vh;
             padding: 20px;
@@ -27,7 +23,7 @@
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             overflow: hidden;
         }
 
@@ -72,7 +68,6 @@
         }
 
         .form-group input,
-        .form-group select,
         .form-group textarea {
             width: 100%;
             padding: 12px 15px;
@@ -83,16 +78,14 @@
         }
 
         .form-group input:focus,
-        .form-group select:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #4CAF50;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+        .form-group textarea {
+            height: 200px;
+            resize: vertical;
         }
 
         .btn {
@@ -102,30 +95,29 @@
             padding: 15px 30px;
             border-radius: 8px;
             font-size: 1.1rem;
-            font-weight: 500;
             cursor: pointer;
-            transition: transform 0.2s ease;
-            margin-right: 15px;
+            transition: all 0.3s ease;
+            margin-right: 10px;
+            margin-bottom: 10px;
         }
 
         .btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        .btn-secondary {
-            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
         }
 
         .result-section {
             background: white;
-            border: 2px solid #e1e5e9;
-            border-radius: 15px;
             padding: 30px;
-            margin-top: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
         }
 
         .result-table {
@@ -137,127 +129,55 @@
 
         .result-table th,
         .result-table td {
-            border: 1px solid #dee2e6;
-            padding: 8px;
+            border: 1px solid #ddd;
+            padding: 8px 12px;
             text-align: left;
             vertical-align: top;
         }
 
-        .result-table th,
-        .result-table td {
-            width: 140px;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .result-table th:first-child,
-        .result-table td:first-child {
-            width: 120px;
-        }
-
-        .result-table th:nth-child(2),
-        .result-table td:nth-child(2) {
-            width: 100px;
-        }
-
-        .result-table th:nth-child(3),
-        .result-table td:nth-child(3) {
-            width: 120px;
-        }
-
         .result-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-weight: 500;
-            text-align: center;
+            background-color: #f5f5f5;
+            font-weight: bold;
+            color: #333;
         }
 
-        .result-table tr:nth-child(even) {
-            background-color: #f8f9fa;
+        .result-table td {
+            background-color: white;
         }
 
-        .export-section {
-            margin-top: 30px;
-            text-align: center;
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
-        .copy-btn {
-            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
-            margin-left: 10px;
-        }
-
-        .download-btn {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            margin-left: 10px;
-        }
-
-        .info-box {
-            background: #e3f2fd;
-            border-left: 4px solid #2196f3;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-        }
-
-        .info-box h3 {
-            color: #1976d2;
-            margin-bottom: 10px;
-        }
-
-        .info-box p {
-            color: #424242;
-            line-height: 1.6;
-        }
-
-        .template-section {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-        }
-
-        .template-section h3 {
-            color: #856404;
-            margin-bottom: 10px;
-        }
-
-        .template-example {
-            background: white;
-            padding: 15px;
+        .status {
+            padding: 10px;
+            margin: 10px 0;
             border-radius: 5px;
-            margin-top: 10px;
-            font-family: monospace;
-            font-size: 0.8rem;
-            white-space: pre-wrap;
-            max-height: 200px;
-            overflow-y: auto;
+            font-weight: bold;
         }
 
-        .season-name-input {
-            margin-bottom: 20px;
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
 
-        @media (max-width: 768px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
 
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-
-            .result-table {
-                font-size: 0.8rem;
-            }
+        .status.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <header class="header">
@@ -265,102 +185,99 @@
             <p>기획서를 복사 붙여넣기하면 푸시 메시지 발송일과 내용이 자동으로 생성됩니다</p>
         </header>
 
-        <main class="main-content">
-            <div class="info-box">
-                <h3><i class="fas fa-info-circle"></i> 사용 방법</h3>
-                <p>1. 주제어를 입력하세요 (예: 더위사냥, 로맨틱)<br>
-                    2. 기획서 텍스트를 복사해서 붙여넣기 하세요<br>
-                    3. "푸시 메시지 생성" 버튼을 클릭하세요<br>
-                    4. 자동으로 모든 컬럼이 생성됩니다</p>
-            </div>
-
-            <div class="template-section">
-                <h3><i class="fas fa-file-alt"></i> 기획서 입력 예시</h3>
-                <div class="template-example">25/5월 점검 race_heathunting 155 5/29 18:00 6/2 10:00 5/29 18:00 6/2 0:00
-                    5/31 6/2 17:00 6/4 10:00
-                    6/1
-                    156 6/5 18:00 6/9 10:00 6/5 18:00 6/9 0:00 6/7 6/9 17:00 6/11 10:00
-                    6/8
-                    157 6/12 18:00 6/16 10:00 6/12 18:00 6/16 0:00 6/14 6/16 17:00 6/18 10:00
-                    6/15
-                    158 6/19 18:00 6/23 10:00 6/19 18:00 6/23 0:00 6/21 6/23 17:00 6/25 10:00
-                    6/22
-                    159 6/26 18:00 6/30 10:00 6/26 18:00 6/30 0:00 6/28 6/30 17:00 7/2 10:00
-                    6/29
-                    160 7/3 18:00 7/7 10:00 7/3 18:00 7/7 0:00 7/5 7/7 17:00 7/9 10:00
-                    7/6
-                    161 7/10 18:00 7/14 10:00 7/10 18:00 7/14 0:00 7/12 7/14 17:00 7/16 10:00
-                    7/13
-                    162 7/17 18:00 7/21 10:00 7/17 18:00 7/21 0:00 7/19 7/21 17:00 7/23 10:00
-                    7/20
-                    163 7/24 18:00 7/28 10:00 7/24 18:00 7/28 0:00 7/26 7/28 17:00 7/30 10:00
-                    7/27
-                    164 7/31 18:00 8/4 10:00 7/31 18:00 8/4 0:00 8/2 8/4 17:00 8/6 10:00
-                    8/3
-                    165 8/7 18:00 8/11 10:00 8/7 18:00 8/11 0:00 8/9 8/11 17:00 8/13 10:00
-                    8/10
-                    166 8/14 18:00 8/18 10:00 8/14 18:00 8/18 0:00 8/16 8/18 17:00 8/20 10:00
-                    8/17
-                    167 8/21 18:00 8/23 10:00 8/21 18:00 8/23 0:00 8/22 20:00 8/23 0:00 8/24 17:00 8/25 10:00</div>
-            </div>
-
+        <div class="main-content">
             <div class="input-section">
-                <h2><i class="fas fa-cog"></i> 입력 설정</h2>
-
-
-                <div class="form-group">
-                    <label for="theme-keyword"><i class="fas fa-trophy"></i> 주제어</label>
-                    <input type="text" id="theme-keyword" placeholder="예: 더위사냥, 로맨틱, 겨울사냥 등" required>
+                <div id="exampleSection" style="margin-bottom: 30px; padding: 25px; background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%); border: 2px solid #4CAF50; border-radius: 15px; box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);">
+                    <h3 style="color: #2e7d32; margin-bottom: 20px; font-size: 1.4em; border-bottom: 2px solid #4CAF50; padding-bottom: 10px;">📋 사용방법</h3>
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <ol style="margin: 10px 0; padding-left: 20px; line-height: 1.8;">
+                            <li><strong>주제어 입력</strong>: 해당 월의 시즌레이스 주제를 입력하세요 (예: 더위사냥, 로맨틱, 추석맞고 등)</li>
+                            <li><strong>기획서 복사</strong>: 엑셀 기획서에서 날짜가 포함된 부분을 복사하세요</li>
+                            <li><strong>붙여넣기</strong>: 복사한 내용을 텍스트 영역에 붙여넣으세요</li>
+                            <li><strong>생성</strong>: "푸시 메시지 생성" 버튼을 클릭하세요</li>
+                        </ol>
+                    </div>
+                    
+                    <h3 style="color: #2e7d32; margin-bottom: 20px; font-size: 1.4em; border-bottom: 2px solid #4CAF50; padding-bottom: 10px;">🎯 자동 생성되는 메시지</h3>
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <ul style="margin: 10px 0; padding-left: 20px; line-height: 1.8;">
+                            <li><strong>시작 푸시</strong>: 목요일 오후 6시 (전체 대상)</li>
+                            <li><strong>순위 하락 알림</strong>: 금,토,일 오후 1시, 7시 (정보분석대상자)</li>
+                            <li><strong>피크타임</strong>: 토,일 오후 8시 (정보분석대상자)</li>
+                            <li><strong>마감 임박</strong>: 일 오후 6시 (정보분석대상자)</li>
+                            <li><strong>보상 지급</strong>: 월요일 오후 5시 (정보분석대상자)</li>
+                        </ul>
+                    </div>
+                    
+                    <h3 style="color: #2e7d32; margin-bottom: 20px; font-size: 1.4em; border-bottom: 2px solid #4CAF50; padding-bottom: 10px;">📝 기획서 예시</h3>
+                    <div style="background: white; padding: 20px; border-radius: 10px; border-left: 4px solid #4CAF50; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 14px; margin: 10px 0; border: 1px solid #dee2e6;">
+                            24/9월 점검	race_halloween	120	9/26 18:00	9/30 10:00	9/26 18:00	9/30 0:00	9/28 20:00	9/28 23:00	9/30 17:00	10/2 10:00<br>
+                            							9/29 20:00	9/29 23:00		<br>
+                            	race_halloween	121	10/3 18:00	10/7 10:00	10/3 18:00	10/7 0:00	10/5 20:00	10/5 23:00	10/7 17:00	10/9 10:00<br>
+                            							10/6 20:00	10/6 23:00		<br>
+                            	race_halloween	122	10/10 18:00	10/14 10:00	10/10 18:00	10/14 0:00	10/12 20:00	10/12 23:00	10/14 17:00	10/16 10:00<br>
+                            							10/13 20:00	10/13 23:00		<br>
+                            	race_halloween	123	10/17 18:00	10/21 10:00	10/17 18:00	10/21 0:00	10/19 20:00	10/19 23:00	10/21 17:00	10/23 10:00<br>
+                            							10/20 20:00	10/20 23:00		<br>
+                            	race_halloween	124	10/24 18:00	10/26 10:00	10/24 18:00	10/26 0:00	10/25 20:00	10/26 0:00	10/27 17:00	10/28 10:00
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="planning-text"><i class="fas fa-tasks"></i> 기획서 텍스트 (복사 붙여넣기)</label>
-                    <textarea id="planning-text" rows="15" placeholder="기획서 텍스트를 복사해서 붙여넣기 하세요..." required></textarea>
+                    <label for="themeKeyword">주제어 (예: 더위사냥, 로맨틱 등):</label>
+                    <input type="text" id="themeKeyword" placeholder="주제어를 입력하세요">
                 </div>
 
                 <div class="form-group">
-                    <button id="generate-btn" class="btn">
-                        <i class="fas fa-magic"></i> 푸시 메시지 생성
-                    </button>
-                    <button id="clear-btn" class="btn btn-secondary">
-                        <i class="fas fa-trash"></i> 초기화
-                    </button>
+                    <label for="planningText">기획서 텍스트:</label>
+                    <textarea id="planningText" placeholder="24/9월 점검	race_halloween	120	9/26 18:00	9/30 10:00	9/26 18:00	9/30 0:00	9/28 20:00	9/28 23:00	9/30 17:00	10/2 10:00
+							9/29 20:00	9/29 23:00		
+	race_halloween	121	10/3 18:00	10/7 10:00	10/3 18:00	10/7 0:00	10/5 20:00	10/5 23:00	10/7 17:00	10/9 10:00
+							10/6 20:00	10/6 23:00		
+	race_halloween	122	10/10 18:00	10/14 10:00	10/10 18:00	10/14 0:00	10/12 20:00	10/12 23:00	10/14 17:00	10/16 10:00
+							10/13 20:00	10/13 23:00		
+	race_halloween	123	10/17 18:00	10/21 10:00	10/17 18:00	10/21 0:00	10/19 20:00	10/19 23:00	10/21 17:00	10/23 10:00
+							10/20 20:00	10/20 23:00		
+	race_halloween	124	10/24 18:00	10/26 10:00	10/24 18:00	10/26 0:00	10/25 20:00	10/26 0:00	10/27 17:00	10/28 10:00"></textarea>
                 </div>
+
+                <button id="generateBtn" class="btn">푸시 메시지 생성</button>
+                <button id="clearBtn" class="btn">초기화</button>
+                
+                <div id="status" class="status info" style="display: none;"></div>
             </div>
 
-            <div id="result-section" class="result-section" style="display: none;">
-                <h2><i class="fas fa-table"></i> 생성된 푸시 메시지</h2>
-                <div id="result-table-container"></div>
-
-                <div class="export-section">
-                    <button id="copy-btn" class="btn copy-btn">
-                        <i class="fas fa-copy"></i> 스프레드시트 형식으로 복사
-                    </button>
-                    <button id="download-btn" class="btn download-btn">
-                        <i class="fas fa-download"></i> CSV 다운로드
-                    </button>
+            <div id="resultSection" class="result-section">
+                <h2>생성된 푸시 메시지</h2>
+                <div id="resultTableContainer"></div>
+                <div class="action-buttons">
+                    <button id="copyBtn" class="btn">복사</button>
+                    <button id="downloadBtn" class="btn">CSV 다운로드</button>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 
     <script>
-        // 시즌레이스 푸시 메시지 자동 생성 도구
         class SeasonRacePushGenerator {
             constructor() {
                 this.initializeElements();
                 this.bindEvents();
+                this.currentPushMessages = [];
             }
 
             initializeElements() {
-                this.themeKeywordInput = document.getElementById('theme-keyword');
-                this.planningTextInput = document.getElementById('planning-text');
-                this.generateBtn = document.getElementById('generate-btn');
-                this.clearBtn = document.getElementById('clear-btn');
-                this.copyBtn = document.getElementById('copy-btn');
-                this.downloadBtn = document.getElementById('download-btn');
-                this.resultSection = document.getElementById('result-section');
-                this.resultTableContainer = document.getElementById('result-table-container');
+                this.themeKeywordInput = document.getElementById('themeKeyword');
+                this.planningTextInput = document.getElementById('planningText');
+                this.generateBtn = document.getElementById('generateBtn');
+                this.clearBtn = document.getElementById('clearBtn');
+                this.resultSection = document.getElementById('resultSection');
+                this.resultTableContainer = document.getElementById('resultTableContainer');
+                this.copyBtn = document.getElementById('copyBtn');
+                this.downloadBtn = document.getElementById('downloadBtn');
+                this.status = document.getElementById('status');
             }
 
             bindEvents() {
@@ -370,37 +287,10 @@
                 this.downloadBtn.addEventListener('click', () => this.downloadCSV());
             }
 
-            generatePushMessages() {
-                const themeKeyword = this.themeKeywordInput.value.trim();
-                const planningText = this.planningTextInput.value.trim();
-
-                if (!themeKeyword || !planningText) {
-                    alert('주제어와 기획서 텍스트를 모두 입력해주세요.');
-                    return;
-                }
-
-                try {
-                    const seasons = this.parsePlanningText(planningText);
-                    const pushMessages = this.generatePushMessagesForSeasons(seasons, themeKeyword);
-
-                    // 디버깅: 생성된 메시지 확인
-                    console.log('생성된 푸시 메시지:', pushMessages);
-                    pushMessages.forEach((msg, index) => {
-                        console.log(`메시지 ${index + 1}:`, {
-                            season: msg.season,
-                            date: msg.date,
-                            sendTime: msg.sendTime,
-                            title: msg.title
-                        });
-                    });
-
-                    this.currentPushMessages = pushMessages; // CSV 생성을 위해 데이터 저장
-                    this.displayResults(pushMessages);
-                    this.resultSection.style.display = 'block';
-                } catch (error) {
-                    alert('기획서 텍스트 파싱 중 오류가 발생했습니다. 텍스트 형식을 확인해주세요.');
-                    console.error('Parsing error:', error);
-                }
+            showStatus(message, type = 'info') {
+                this.status.textContent = message;
+                this.status.className = `status ${type}`;
+                this.status.style.display = 'block';
             }
 
             parsePlanningText(text) {
@@ -413,99 +303,45 @@
                     const line = lines[i].trim();
                     if (!line) continue;
 
-                    console.log(`라인 ${i + 1}:`, line);
+                    const parts = line.split('\t');
+                    console.log(`라인 ${i + 1}:`, parts);
 
-                    // race_ 키워드가 포함된 형식 처리 (race_chocolate, race_acorn, race_thanksgiving24 등)
-                    if (line.includes('race_')) {
-                        const parts = line.split(/\s+/).map(part => part.trim()).filter(part => part);
-                        console.log(`race_ 라인 ${i + 1} 분리 결과:`, parts);
+                    // 첫 줄이 제목인지 확인 (race_로 시작하고 실제 날짜가 없는 경우만 제외)
+                    if (i === 0 && parts.some(part => part.includes('race_')) && !parts.some(part => /\d{1,2}\/\d{1,2}/.test(part))) {
+                        console.log('첫 줄은 제목이므로 건너뜀');
+                        continue;
+                    }
 
-                        // race_ 다음에 오는 숫자 찾기 (시즌 번호)
-                        const seasonNumberMatch = parts.find(part => /^\d+$/.test(part));
-                        if (seasonNumberMatch) {
-                            console.log(`시즌 번호 발견: ${seasonNumberMatch}`);
-                        }
+                    // 날짜 패턴 찾기 (시간이 포함된 날짜)
+                    const dateTimePattern = /^\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}$/;
+                    const dateOnlyPattern = /^\d{1,2}\/\d{1,2}$/;
 
-                        // 날짜 패턴 찾기 (시간 포함)
-                        const dateTimePattern = /^\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}$/;
-                        const dateOnlyPattern = /^\d{1,2}\/\d{1,2}$/;
+                    const dateColumns = parts.filter(part => {
+                        const trimmed = part.trim();
+                        return dateTimePattern.test(trimmed) || dateOnlyPattern.test(trimmed);
+                    });
 
-                        const dateColumns = parts.filter(part => {
-                            return dateTimePattern.test(part) || dateOnlyPattern.test(part);
-                        });
+                    console.log('찾은 날짜 컬럼:', dateColumns);
 
-                        console.log(`race_ 라인 ${i + 1} 날짜 컬럼:`, dateColumns);
+                    if (dateColumns.length >= 2) {
+                        const startDate = this.parseSimpleDate(dateColumns[0]);
+                        const endDate = this.parseSimpleDate(dateColumns[1]);
+                        
+                        console.log('파싱된 날짜:', startDate, endDate);
+                        
+                        if (startDate && endDate) {
+                            const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+                            const hasPeakTime = daysDiff >= 5;
 
-                        if (dateColumns.length >= 2) {
-                            // 첫 번째와 두 번째 날짜를 시작일과 종료일로 사용
-                            const startDate = this.parseSimpleDate(dateColumns[0]);
-                            const endDate = this.parseSimpleDate(dateColumns[1]);
-
-                            console.log(`race_ 라인 ${i + 1} 파싱된 날짜:`, { startDate, endDate });
-
-                            if (startDate && endDate) {
-                                const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-                                const hasPeakTime = daysDiff >= 5;
-
-                                currentSeason = {
-                                    startDate: startDate,
-                                    endDate: endDate,
-                                    daysDiff: daysDiff,
-                                    hasPeakTime: hasPeakTime,
-                                    seasonNumber: seasonNumberMatch ? parseInt(seasonNumberMatch) : seasons.length + 1
-                                };
-                                seasons.push(currentSeason);
-                                console.log(`시즌 ${currentSeason.seasonNumber} 추가:`, currentSeason);
-                            }
-                        }
-                    } else {
-                        // 기존 로직 (race_chocolate가 없는 경우)
-                        let parts = [];
-
-                        // 1. 탭으로 분리 시도
-                        if (line.includes('\t')) {
-                            parts = line.split('\t').map(part => part.trim()).filter(part => part);
-                        }
-                        // 2. 공백으로 분리 시도 (연속된 공백을 하나로 처리)
-                        else {
-                            parts = line.split(/\s+/).map(part => part.trim()).filter(part => part);
-                        }
-
-                        console.log(`일반 라인 ${i + 1} 분리 결과:`, parts);
-
-                        // 날짜 패턴 찾기
-                        const dateTimePattern = /^\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}$/;
-                        const dateOnlyPattern = /^\d{1,2}\/\d{1,2}$/;
-
-                        const dateColumns = parts.filter(part => {
-                            return dateTimePattern.test(part) || dateOnlyPattern.test(part);
-                        });
-
-                        console.log(`일반 라인 ${i + 1} 날짜 컬럼:`, dateColumns);
-
-                        if (dateColumns.length >= 2) {
-                            const startDate = this.parseSimpleDate(dateColumns[0]);
-                            const endDate = this.parseSimpleDate(dateColumns[1]);
-
-                            console.log(`일반 라인 ${i + 1} 파싱된 날짜:`, { startDate, endDate });
-
-                            if (startDate && endDate) {
-                                const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-                                const hasPeakTime = daysDiff >= 5;
-
-                                // 시즌 번호 찾기 (숫자만 있는 부분)
-                                const seasonNumberMatch = parts.find(part => /^\d+$/.test(part));
-
-                                currentSeason = {
-                                    startDate: startDate,
-                                    endDate: endDate,
-                                    daysDiff: daysDiff,
-                                    hasPeakTime: hasPeakTime,
-                                    seasonNumber: seasonNumberMatch ? parseInt(seasonNumberMatch) : seasons.length + 1
-                                };
-                                seasons.push(currentSeason);
-                                console.log(`시즌 ${currentSeason.seasonNumber} 추가:`, currentSeason);
-                            }
+                            currentSeason = {
+                                startDate: startDate,
+                                endDate: endDate,
+                                daysDiff: daysDiff,
+                                hasPeakTime: hasPeakTime,
+                                seasonNumber: seasons.length + 1
+                            };
+                            seasons.push(currentSeason);
+                            console.log(`시즌 ${currentSeason.seasonNumber} 추가:`, currentSeason);
                         }
                     }
                 }
@@ -520,26 +356,20 @@
 
                 const month = parseInt(match[1]) - 1;
                 const day = parseInt(match[2]);
-                const currentYear = new Date().getFullYear();
-
-                const date = new Date(currentYear, month, day);
-
-                // 만약 날짜가 과거라면 다음 해로 설정
-                if (date < new Date()) {
-                    date.setFullYear(currentYear + 1);
-                }
-
+                const year = 2025; // 2025년으로 고정
+                
+                const date = new Date(year, month, day);
                 return date;
             }
 
             generatePushMessagesForSeasons(seasons, themeKeyword) {
                 const pushMessages = [];
-
+                
                 seasons.forEach(season => {
                     const messages = this.generateMessagesForSeason(season, themeKeyword);
                     pushMessages.push(...messages);
                 });
-
+                
                 return pushMessages;
             }
 
@@ -547,135 +377,150 @@
                 const messages = [];
                 const startDate = new Date(season.startDate);
                 const endDate = new Date(season.endDate);
+                
+                // 시작일을 기준으로 정확한 요일 계산
+                const startDay = startDate.getDay(); // 0=일요일, 1=월요일, ..., 6=토요일
+                
+                // 시작일부터 각 요일까지의 날짜 계산
+                const thursdayDate = new Date(startDate);
+                const fridayDate = new Date(startDate);
+                const saturdayDate = new Date(startDate);
+                const sundayDate = new Date(startDate);
+                const mondayDate = new Date(startDate);
+                
+                // 시작일이 목요일이 아닌 경우, 다음 목요일을 찾기
+                if (startDay !== 4) { // 4 = 목요일
+                    const daysToAdd = (4 - startDay + 7) % 7;
+                    thursdayDate.setDate(startDate.getDate() + daysToAdd);
+                    fridayDate.setDate(startDate.getDate() + daysToAdd + 1);
+                    saturdayDate.setDate(startDate.getDate() + daysToAdd + 2);
+                    sundayDate.setDate(startDate.getDate() + daysToAdd + 3);
+                    mondayDate.setDate(startDate.getDate() + daysToAdd + 4);
+                } else {
+                    // 시작일이 이미 목요일인 경우
+                    fridayDate.setDate(startDate.getDate() + 1);
+                    saturdayDate.setDate(startDate.getDate() + 2);
+                    sundayDate.setDate(startDate.getDate() + 3);
+                    mondayDate.setDate(startDate.getDate() + 4);
+                }
 
-                // 시작일을 그대로 사용
-                let startDateObj = new Date(startDate);
-
-                // 1. 시작 푸시 (시작일 오후 6시)
+                // 1. 시작 푸시 (목요일 오후 6시)
                 messages.push({
                     season: `${season.seasonNumber}회차`,
-                    date: this.formatDate(startDateObj),
-                    sendTime: '시작일 오후 6시',
+                    date: this.formatDate(thursdayDate),
+                    sendTime: '목요일 오후 6시',
                     target: '전체',
-                    title: `${themeKeyword} 시즌레이스 시작!`,
+                    title: `(광고)${themeKeyword} 레이스 오픈! ❤`,
                     content: '최대 5억냥에 도전해 보세요! 🎁(수신거부:게임내설정)',
                     data: ''
                 });
 
                 if (season.hasPeakTime) {
                     // 5일 이상 운영 시
-                    const day1 = new Date(startDateObj);
-                    day1.setDate(startDateObj.getDate() + 1);
-
-                    const day2 = new Date(startDateObj);
-                    day2.setDate(startDateObj.getDate() + 2);
-
-                    const day3 = new Date(startDateObj);
-                    day3.setDate(startDateObj.getDate() + 3);
-
-                    const day4 = new Date(startDateObj);
-                    day4.setDate(startDateObj.getDate() + 4);
-
                     messages.push(
-                        // 순위 하락 알림 (시작일+1, 시작일+2, 시작일+3 오후 1시)
+                        // 순위 하락 알림 (금,토,일 오후 1시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: `${this.formatDate(day1)}~${this.formatDate(day3)}`,
-                            sendTime: '시작일+1,2,3 오후 1시',
+                            date: `${this.formatDate(fridayDate)}~${this.formatDate(sundayDate)}`,
+                            sendTime: '금,토,일 오후 1시',
                             target: '정보분석대상자',
-                            title: `${themeKeyword} 순위 하락 알림`,
-                            content: '순위가 하락했습니다! 다시 도전해보세요! 💪(수신거부:게임내설정)',
-                            data: ''
+                            title: `(광고)이런! 순위가 떨어졌어요!😱`,
+                            content: '접속해서 순위를 올려보세요!🙏(수신거부:게임내설정)',
+                            data: '"뉴맞고 : 시즌레이스 순위하락 13시(Mnmg_Seasonrace_1)\n뉴맞고K : 시즌레이스 순위하락(Mnmgk_Seasonrace_1)"'
                         },
-                        // 순위 하락 알림 (시작일+1, 시작일+2, 시작일+3 오후 7시)
+                        // 순위 하락 알림 (금,토,일 오후 7시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: `${this.formatDate(day1)}~${this.formatDate(day3)}`,
-                            sendTime: '시작일+1,2,3 오후 7시',
+                            date: `${this.formatDate(fridayDate)}~${this.formatDate(sundayDate)}`,
+                            sendTime: '금,토,일 오후 7시',
                             target: '정보분석대상자',
-                            title: `${themeKeyword} 순위 하락 알림`,
-                            content: '순위가 하락했습니다! 다시 도전해보세요! 💪(수신거부:게임내설정)',
-                            data: ''
+                            title: `(광고)이런! 순위가 떨어졌어요!😱`,
+                            content: '아직 늦지 않았어요! 순위를 올려보세요!🙏(수신거부:게임내설정)',
+                            data: '"뉴맞고 : 시즌레이스 순위하락 19시(Mnmg_Seasonrace_2)\n뉴맞고K : 시즌레이스 순위하락 19시(Mnmgk_Seasonrace_2)"'
                         },
-                        // 피크타임 (시작일+2, 시작일+3 오후 8시)
+                        // 피크타임 (토,일 오후 8시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: `${this.formatDate(day2)}~${this.formatDate(day3)}`,
-                            sendTime: '시작일+2,3 오후 8시',
+                            date: `${this.formatDate(saturdayDate)}~${this.formatDate(sundayDate)}`,
+                            sendTime: '토,일 오후 8시',
                             target: '정보분석대상자',
-                            title: `${themeKeyword} 피크타임!`,
-                            content: '지금이 피크타임! 최고의 순위에 도전하세요! 🔥(수신거부:게임내설정)',
-                            data: ''
+                            title: `(광고)${themeKeyword} 레이스 피크타임!🕗`,
+                            content: '플레이 시 보상 두배! 순위를 올려보세요!!🚀(수신거부:게임내설정)',
+                            data: '"뉴맞고 : 시즌레이스 피크타임(Mnmg_Seasonrace_peaktime)\n뉴맞고k : 시즌레이스 피크타임(Mnmgk_Seasonrace_peaktime)"'
                         },
-                        // 마감 임박 (시작일+3 오후 6시)
+                        // 마감 임박 (일 오후 6시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: this.formatDate(day3),
-                            sendTime: '시작일+3 오후 6시',
+                            date: this.formatDate(sundayDate),
+                            sendTime: '일 오후 6시',
                             target: '정보분석대상자',
-                            title: `${themeKeyword} 마감 임박!`,
-                            content: '시즌레이스 마감까지 2시간! 마지막 도전! ⏰(수신거부:게임내설정)',
-                            data: ''
+                            title: `(광고)${themeKeyword} 레이스 마감됩니다!⏳`,
+                            content: `지금 ${themeKeyword} 레이스에 참가해보세요!👏(수신거부: 게임내설정)`,
+                            data: '"뉴맞고 : 시즌레이스 참여독려(Mnmg_Seasonrace_encourage)\n뉴맞고k : 시즌레이스 참여독려(Mnmgk_Seasonrace_encourage)"'
                         },
-                        // 시즌 종료 (시작일+4 오후 5시)
+                        // 보상 지급 (월요일 오후 5시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: this.formatDate(day4),
-                            sendTime: '시작일+4 오후 5시',
+                            date: this.formatDate(mondayDate),
+                            sendTime: '월요일 오후 5시',
                             target: '정보분석대상자',
-                            title: `${themeKeyword} 시즌 종료`,
-                            content: '시즌레이스가 종료되었습니다! 다음 시즌을 기대해주세요! 🎉(수신거부:게임내설정)',
-                            data: ''
+                            title: `(광고)${themeKeyword} 레이스 종료!!🎁`,
+                            content: '접속하여 순위와 보상을 확인해보세요!!🏆(수신거부: 게임내설정)',
+                            data: '"뉴맞고 : 시즌레이스 결과발표(Mnmg_Seasonrace_result)\n뉴맞고K : 시즌레이스 결과발표(Mnmgk_Seasonrace_result)"'
                         }
                     );
                 } else {
                     // 3일 운영 시
-                    const day1 = new Date(startDateObj);
-                    day1.setDate(startDateObj.getDate() + 1);
-
-                    const day2 = new Date(startDateObj);
-                    day2.setDate(startDateObj.getDate() + 2);
-
                     messages.push(
-                        // 순위 하락 알림 (시작일+1, 시작일+2 오후 1시)
+                        // 순위 하락 알림 (금,토 오후 1시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: `${this.formatDate(day1)}~${this.formatDate(day2)}`,
-                            sendTime: '시작일+1,2 오후 1시',
+                            date: `${this.formatDate(fridayDate)}~${this.formatDate(saturdayDate)}`,
+                            sendTime: '금,토 오후 1시',
                             target: '정보분석대상자',
-                            title: `${themeKeyword} 순위 하락 알림`,
-                            content: '순위가 하락했습니다! 다시 도전해보세요! 💪(수신거부:게임내설정)',
-                            data: ''
+                            title: `(광고)이런! 순위가 떨어졌어요!😱`,
+                            content: '접속해서 순위를 올려보세요!🙏(수신거부:게임내설정)',
+                            data: '"뉴맞고 : 시즌레이스 순위하락 13시(Mnmg_Seasonrace_1)\n뉴맞고K : 시즌레이스 순위하락(Mnmgk_Seasonrace_1)"'
                         },
-                        // 순위 하락 알림 (시작일+1, 시작일+2 오후 7시)
+                        // 순위 하락 알림 (금,토 오후 7시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: `${this.formatDate(day1)}~${this.formatDate(day2)}`,
-                            sendTime: '시작일+1,2 오후 7시',
+                            date: `${this.formatDate(fridayDate)}~${this.formatDate(saturdayDate)}`,
+                            sendTime: '금,토 오후 7시',
                             target: '정보분석대상자',
-                            title: `${themeKeyword} 순위 하락 알림`,
-                            content: '순위가 하락했습니다! 다시 도전해보세요! 💪(수신거부:게임내설정)',
-                            data: ''
+                            title: `(광고)이런! 순위가 떨어졌어요!😱`,
+                            content: '아직 늦지 않았어요! 순위를 올려보세요!🙏(수신거부:게임내설정)',
+                            data: '"뉴맞고 : 시즌레이스 순위하락 19시(Mnmg_Seasonrace_2)\n뉴맞고K : 시즌레이스 순위하락 19시(Mnmgk_Seasonrace_2)"'
                         },
-                        // 피크타임 (시작일+1 오후 8시)
+                        // 피크타임 (토,일 오후 8시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: this.formatDate(day1),
-                            sendTime: '시작일+1 오후 8시',
+                            date: `${this.formatDate(saturdayDate)}~${this.formatDate(sundayDate)}`,
+                            sendTime: '토,일 오후 8시',
                             target: '정보분석대상자',
-                            title: `${themeKeyword} 피크타임!`,
-                            content: '지금이 피크타임! 최고의 순위에 도전하세요! 🔥(수신거부:게임내설정)',
-                            data: ''
+                            title: `(광고)${themeKeyword} 레이스 피크타임!🕗`,
+                            content: '플레이 시 보상 두배! 순위를 올려보세요!!🚀(수신거부:게임내설정)',
+                            data: '"뉴맞고 : 시즌레이스 피크타임(Mnmg_Seasonrace_peaktime)\n뉴맞고k : 시즌레이스 피크타임(Mnmgk_Seasonrace_peaktime)"'
                         },
-                        // 시즌 종료 (시작일+2 오후 5시)
+                        // 마감 임박 (일 오후 6시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: this.formatDate(day2),
-                            sendTime: '시작일+2 오후 5시',
+                            date: this.formatDate(sundayDate),
+                            sendTime: '일 오후 6시',
                             target: '정보분석대상자',
-                            title: `${themeKeyword} 시즌 종료`,
-                            content: '시즌레이스가 종료되었습니다! 다음 시즌을 기대해주세요! 🎉(수신거부:게임내설정)',
-                            data: ''
+                            title: `(광고)${themeKeyword} 레이스 마감됩니다!⏳`,
+                            content: `지금 ${themeKeyword} 레이스에 참가해보세요!👏(수신거부: 게임내설정)`,
+                            data: '"뉴맞고 : 시즌레이스 참여독려(Mnmg_Seasonrace_encourage)\n뉴맞고k : 시즌레이스 참여독려(Mnmgk_Seasonrace_encourage)"'
+                        },
+                        // 보상 지급 (월요일 오후 5시)
+                        {
+                            season: `${season.seasonNumber}회차`,
+                            date: this.formatDate(mondayDate),
+                            sendTime: '월요일 오후 5시',
+                            target: '정보분석대상자',
+                            title: `(광고)${themeKeyword} 레이스 종료!!🎁`,
+                            content: '접속하여 순위와 보상을 확인해보세요!!🏆(수신거부: 게임내설정)',
+                            data: '"뉴맞고 : 시즌레이스 결과발표(Mnmg_Seasonrace_result)\n뉴맞고K : 시즌레이스 결과발표(Mnmgk_Seasonrace_result)"'
                         }
                     );
                 }
@@ -687,6 +532,46 @@
                 const month = date.getMonth() + 1;
                 const day = date.getDate();
                 return `${month}/${day}`;
+            }
+
+            generatePushMessages() {
+                console.log('푸시 메시지 생성 시작');
+                
+                const themeKeyword = this.themeKeywordInput.value.trim();
+                const planningText = this.planningTextInput.value.trim();
+
+                console.log('주제어:', themeKeyword);
+                console.log('기획서 텍스트 길이:', planningText.length);
+
+                if (!themeKeyword || !planningText) {
+                    this.showStatus('❌ 주제어와 기획서 텍스트를 모두 입력해주세요.', 'error');
+                    return;
+                }
+
+                try {
+                    console.log('기획서 파싱 시작');
+                    const seasons = this.parsePlanningText(planningText);
+                    console.log('파싱된 시즌 수:', seasons.length);
+                    console.log('시즌 데이터:', seasons);
+                    
+                    if (seasons.length === 0) {
+                        this.showStatus('❌ 기획서에서 날짜를 찾을 수 없습니다. 형식을 확인해주세요.', 'error');
+                        return;
+                    }
+                    
+                    const pushMessages = this.generatePushMessagesForSeasons(seasons, themeKeyword);
+                    console.log('생성된 푸시 메시지 수:', pushMessages.length);
+                    
+                    this.currentPushMessages = pushMessages;
+                    this.displayResults(pushMessages);
+                    this.resultSection.style.display = 'block';
+                    
+                    this.showStatus(`✅ ${pushMessages.length}개의 푸시 메시지가 생성되었습니다!`, 'success');
+                    console.log('푸시 메시지 생성 완료');
+                } catch (error) {
+                    console.error('오류 발생:', error);
+                    this.showStatus('❌ 기획서 텍스트 파싱 중 오류가 발생했습니다: ' + error.message, 'error');
+                }
             }
 
             displayResults(pushMessages) {
@@ -707,7 +592,7 @@
                 Object.keys(seasonGroups).forEach(season => {
                     const messages = seasonGroups[season];
                     const rowspan = messages.length;
-
+                    
                     messages.forEach((msg, index) => {
                         html += '<tr>';
                         if (index === 0) {
@@ -731,15 +616,18 @@
                 this.themeKeywordInput.value = '';
                 this.planningTextInput.value = '';
                 this.resultSection.style.display = 'none';
+                this.status.style.display = 'none';
             }
+
+
 
             copyToClipboard() {
                 const csvContent = this.convertTableToCSV();
                 navigator.clipboard.writeText(csvContent).then(() => {
-                    alert('스프레드시트 형식으로 복사되었습니다!');
+                    this.showStatus('✅ 스프레드시트 형식으로 복사되었습니다!', 'success');
                 }).catch(err => {
                     console.error('복사 실패:', err);
-                    alert('복사에 실패했습니다.');
+                    this.showStatus('❌ 복사에 실패했습니다.', 'error');
                 });
             }
 
@@ -748,23 +636,25 @@
                 const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
                 const link = document.createElement('a');
                 const url = URL.createObjectURL(blob);
-
+                
                 link.setAttribute('href', url);
                 link.setAttribute('download', `시즌레이스_푸시메시지_${new Date().toISOString().split('T')[0]}.csv`);
                 link.style.visibility = 'hidden';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
+                
+                this.showStatus('✅ CSV 파일이 다운로드되었습니다!', 'success');
             }
 
             convertTableToCSV() {
                 if (!this.currentPushMessages || this.currentPushMessages.length === 0) {
                     return '';
                 }
-
+                
                 let csv = [];
                 csv.push('"차수","일자","발송일","대상","제목","내용","데이터"');
-
+                
                 this.currentPushMessages.forEach(msg => {
                     const row = [
                         `"${msg.season}"`,
@@ -777,16 +667,42 @@
                     ];
                     csv.push(row.join(','));
                 });
-
+                
                 return csv.join('\n');
             }
         }
 
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', () => {
-            new SeasonRacePushGenerator();
+            console.log('페이지 로드 완료');
+            try {
+                const generator = new SeasonRacePushGenerator();
+                console.log('SeasonRacePushGenerator 초기화 완료');
+                
+                // 초기화 확인
+                if (generator.themeKeywordInput && generator.planningTextInput && generator.generateBtn) {
+                    console.log('모든 요소가 정상적으로 로드됨');
+                    generator.showStatus('✅ 도구가 준비되었습니다! 주제어와 기획서를 입력해주세요.', 'success');
+                } else {
+                    console.error('일부 요소가 로드되지 않음');
+                    generator.showStatus('❌ 일부 요소가 로드되지 않았습니다.', 'error');
+                }
+            } catch (error) {
+                console.error('초기화 오류:', error);
+                alert('도구 초기화 중 오류가 발생했습니다: ' + error.message);
+            }
+        });
+
+        // 전역 오류 핸들러
+        window.addEventListener('error', function(e) {
+            console.error('전역 오류:', e.error);
+            const status = document.getElementById('status');
+            if (status) {
+                status.style.display = 'block';
+                status.className = 'status error';
+                status.textContent = '❌ 오류가 발생했습니다: ' + e.message;
+            }
         });
     </script>
 </body>
-
 </html>
