@@ -545,27 +545,14 @@
                 const startDate = new Date(season.startDate);
                 const endDate = new Date(season.endDate);
 
-                // 시작일을 그대로 사용 (목요일이든 아니든)
-                let thursdayDate = new Date(startDate);
+                // 시작일을 그대로 사용
+                let startDateObj = new Date(startDate);
 
-                // 각 요일별 날짜 계산
-                const fridayDate = new Date(thursdayDate);
-                fridayDate.setDate(thursdayDate.getDate() + 1);
-
-                const saturdayDate = new Date(thursdayDate);
-                saturdayDate.setDate(thursdayDate.getDate() + 2);
-
-                const sundayDate = new Date(thursdayDate);
-                sundayDate.setDate(thursdayDate.getDate() + 3);
-
-                const mondayDate = new Date(thursdayDate);
-                mondayDate.setDate(thursdayDate.getDate() + 4);
-
-                // 1. 시작 푸시 (목요일 오후 6시)
+                // 1. 시작 푸시 (시작일 오후 6시)
                 messages.push({
                     season: `${season.seasonNumber}회차`,
-                    date: this.formatDate(thursdayDate),
-                    sendTime: '목요일 오후 6시',
+                    date: this.formatDate(startDateObj),
+                    sendTime: '시작일 오후 6시',
                     target: '전체',
                     title: `${themeKeyword} 시즌레이스 시작!`,
                     content: '최대 5억냥에 도전해 보세요! 🎁(수신거부:게임내설정)',
@@ -574,52 +561,64 @@
 
                 if (season.hasPeakTime) {
                     // 5일 이상 운영 시
+                    const day1 = new Date(startDateObj);
+                    day1.setDate(startDateObj.getDate() + 1);
+                    
+                    const day2 = new Date(startDateObj);
+                    day2.setDate(startDateObj.getDate() + 2);
+                    
+                    const day3 = new Date(startDateObj);
+                    day3.setDate(startDateObj.getDate() + 3);
+                    
+                    const day4 = new Date(startDateObj);
+                    day4.setDate(startDateObj.getDate() + 4);
+                    
                     messages.push(
-                        // 순위 하락 알림 (금,토,일 오후 1시)
+                        // 순위 하락 알림 (시작일+1, 시작일+2, 시작일+3 오후 1시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: `${this.formatDate(fridayDate)}~${this.formatDate(sundayDate)}`,
-                            sendTime: '금,토,일 오후 1시',
+                            date: `${this.formatDate(day1)}~${this.formatDate(day3)}`,
+                            sendTime: '시작일+1,2,3 오후 1시',
                             target: '정보분석대상자',
                             title: `${themeKeyword} 순위 하락 알림`,
                             content: '순위가 하락했습니다! 다시 도전해보세요! 💪(수신거부:게임내설정)',
                             data: ''
                         },
-                        // 순위 하락 알림 (금,토,일 오후 7시)
+                        // 순위 하락 알림 (시작일+1, 시작일+2, 시작일+3 오후 7시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: `${this.formatDate(fridayDate)}~${this.formatDate(sundayDate)}`,
-                            sendTime: '금,토,일 오후 7시',
+                            date: `${this.formatDate(day1)}~${this.formatDate(day3)}`,
+                            sendTime: '시작일+1,2,3 오후 7시',
                             target: '정보분석대상자',
                             title: `${themeKeyword} 순위 하락 알림`,
                             content: '순위가 하락했습니다! 다시 도전해보세요! 💪(수신거부:게임내설정)',
                             data: ''
                         },
-                        // 피크타임 (토,일 오후 8시)
+                        // 피크타임 (시작일+2, 시작일+3 오후 8시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: `${this.formatDate(saturdayDate)}~${this.formatDate(sundayDate)}`,
-                            sendTime: '토,일 오후 8시',
+                            date: `${this.formatDate(day2)}~${this.formatDate(day3)}`,
+                            sendTime: '시작일+2,3 오후 8시',
                             target: '정보분석대상자',
                             title: `${themeKeyword} 피크타임!`,
                             content: '지금이 피크타임! 최고의 순위에 도전하세요! 🔥(수신거부:게임내설정)',
                             data: ''
                         },
-                        // 마감 임박 (일 오후 6시)
+                        // 마감 임박 (시작일+3 오후 6시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: this.formatDate(sundayDate),
-                            sendTime: '일 오후 6시',
+                            date: this.formatDate(day3),
+                            sendTime: '시작일+3 오후 6시',
                             target: '정보분석대상자',
                             title: `${themeKeyword} 마감 임박!`,
                             content: '시즌레이스 마감까지 2시간! 마지막 도전! ⏰(수신거부:게임내설정)',
                             data: ''
                         },
-                        // 시즌 종료 (월요일 오후 5시)
+                        // 시즌 종료 (시작일+4 오후 5시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: this.formatDate(mondayDate),
-                            sendTime: '월요일 오후 5시',
+                            date: this.formatDate(day4),
+                            sendTime: '시작일+4 오후 5시',
                             target: '정보분석대상자',
                             title: `${themeKeyword} 시즌 종료`,
                             content: '시즌레이스가 종료되었습니다! 다음 시즌을 기대해주세요! 🎉(수신거부:게임내설정)',
@@ -628,42 +627,48 @@
                     );
                 } else {
                     // 3일 운영 시
+                    const day1 = new Date(startDateObj);
+                    day1.setDate(startDateObj.getDate() + 1);
+                    
+                    const day2 = new Date(startDateObj);
+                    day2.setDate(startDateObj.getDate() + 2);
+                    
                     messages.push(
-                        // 순위 하락 알림 (금,토 오후 1시)
+                        // 순위 하락 알림 (시작일+1, 시작일+2 오후 1시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: `${this.formatDate(fridayDate)}~${this.formatDate(saturdayDate)}`,
-                            sendTime: '금,토 오후 1시',
+                            date: `${this.formatDate(day1)}~${this.formatDate(day2)}`,
+                            sendTime: '시작일+1,2 오후 1시',
                             target: '정보분석대상자',
                             title: `${themeKeyword} 순위 하락 알림`,
                             content: '순위가 하락했습니다! 다시 도전해보세요! 💪(수신거부:게임내설정)',
                             data: ''
                         },
-                        // 순위 하락 알림 (금,토 오후 7시)
+                        // 순위 하락 알림 (시작일+1, 시작일+2 오후 7시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: `${this.formatDate(fridayDate)}~${this.formatDate(saturdayDate)}`,
-                            sendTime: '금,토 오후 7시',
+                            date: `${this.formatDate(day1)}~${this.formatDate(day2)}`,
+                            sendTime: '시작일+1,2 오후 7시',
                             target: '정보분석대상자',
                             title: `${themeKeyword} 순위 하락 알림`,
                             content: '순위가 하락했습니다! 다시 도전해보세요! 💪(수신거부:게임내설정)',
                             data: ''
                         },
-                        // 피크타임 (금 오후 8시)
+                        // 피크타임 (시작일+1 오후 8시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: this.formatDate(fridayDate),
-                            sendTime: '금 오후 8시',
+                            date: this.formatDate(day1),
+                            sendTime: '시작일+1 오후 8시',
                             target: '정보분석대상자',
                             title: `${themeKeyword} 피크타임!`,
                             content: '지금이 피크타임! 최고의 순위에 도전하세요! 🔥(수신거부:게임내설정)',
                             data: ''
                         },
-                        // 시즌 종료 (일요일 오후 5시)
+                        // 시즌 종료 (시작일+2 오후 5시)
                         {
                             season: `${season.seasonNumber}회차`,
-                            date: this.formatDate(sundayDate),
-                            sendTime: '일요일 오후 5시',
+                            date: this.formatDate(day2),
+                            sendTime: '시작일+2 오후 5시',
                             target: '정보분석대상자',
                             title: `${themeKeyword} 시즌 종료`,
                             content: '시즌레이스가 종료되었습니다! 다음 시즌을 기대해주세요! 🎉(수신거부:게임내설정)',
