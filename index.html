@@ -317,6 +317,7 @@
                 const lines = text.trim().split('\n');
                 const seasons = [];
                 let currentSeason = null;
+                let currentSeasonData = null;
 
                 for (let i = 0; i < lines.length; i++) {
                     const line = lines[i].trim();
@@ -324,6 +325,9 @@
 
                     console.log(`라인 ${i + 1} 원본:`, line);
 
+                    // 들여쓰기 확인 (탭이나 공백으로 시작하는지)
+                    const isIndented = line.startsWith('\t') || /^\s+/.test(line);
+                    
                     // 다양한 구분자로 분리 (탭, 연속된 공백, 콤마)
                     let parts = [];
                     if (line.includes('\t')) {
@@ -338,11 +342,25 @@
                     }
 
                     console.log(`라인 ${i + 1} 분리 결과:`, parts);
+                    console.log(`라인 ${i + 1} 들여쓰기 여부:`, isIndented);
 
                     // 첫 줄이 제목인지 확인 (race_로 시작하고 실제 날짜가 없는 경우만 제외)
                     if (i === 0 && parts.some(part => part.includes('race_')) && !parts.some(part => /\d{1,2}\/\d{1,2}/.test(part))) {
                         console.log('첫 줄은 제목이므로 건너뜀');
                         continue;
+                    }
+
+                    // 시즌 번호 찾기 (3자리 숫자)
+                    let seasonNumber = null;
+                    for (let part of parts) {
+                        const trimmed = part.trim();
+                        // 3자리 숫자 패턴 찾기 (100-999)
+                        const seasonMatch = trimmed.match(/^(\d{3})$/);
+                        if (seasonMatch) {
+                            seasonNumber = parseInt(seasonMatch[1]);
+                            console.log(`시즌 번호 발견: ${seasonNumber}`);
+                            break;
+                        }
                     }
 
                     // 날짜 패턴 찾기 (시간이 포함된 날짜)
@@ -356,7 +374,14 @@
 
                     console.log('찾은 날짜 컬럼:', dateColumns);
 
-                    if (dateColumns.length >= 2) {
+                    // 새로운 시즌 시작 조건
+                    if (seasonNumber && dateColumns.length >= 2 && !isIndented) {
+                        // 이전 시즌이 있으면 저장
+                        if (currentSeasonData) {
+                            seasons.push(currentSeasonData);
+                            console.log(`시즌 ${currentSeasonData.seasonNumber} 완료:`, currentSeasonData);
+                        }
+
                         const startDate = this.parseSimpleDate(dateColumns[0]);
                         const endDate = this.parseSimpleDate(dateColumns[1]);
 
@@ -366,38 +391,45 @@
                             const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
                             const hasPeakTime = daysDiff >= 5;
 
-                            // 시즌 번호 찾기 (3자리 숫자)
-                            let seasonNumber = null;
-
-                            // 각 파트에서 3자리 숫자 찾기
-                            for (let part of parts) {
-                                const trimmed = part.trim();
-                                // 3자리 숫자 패턴 찾기 (100-999)
-                                const seasonMatch = trimmed.match(/^(\d{3})$/);
-                                if (seasonMatch) {
-                                    seasonNumber = parseInt(seasonMatch[1]);
-                                    console.log(`시즌 번호 발견: ${seasonNumber}`);
-                                    break;
-                                }
-                            }
-
-                            // 3자리 숫자가 없으면 순차 번호 사용
-                            if (seasonNumber === null) {
-                                seasonNumber = seasons.length + 1;
-                                console.log(`3자리 숫자 없음, 순차 번호 사용: ${seasonNumber}`);
-                            }
-
-                            currentSeason = {
+                            currentSeasonData = {
                                 startDate: startDate,
                                 endDate: endDate,
                                 daysDiff: daysDiff,
                                 hasPeakTime: hasPeakTime,
                                 seasonNumber: seasonNumber
                             };
-                            seasons.push(currentSeason);
-                            console.log(`시즌 ${currentSeason.seasonNumber} 추가:`, currentSeason);
+                            console.log(`새 시즌 ${seasonNumber} 시작:`, currentSeasonData);
+                        }
+                    } else if (isIndented && currentSeasonData && dateColumns.length > 0) {
+                        // 들여쓰기된 라인에서 추가 날짜 정보 처리
+                        console.log(`시즌 ${currentSeasonData.seasonNumber}에 추가 날짜 정보 추가:`, dateColumns);
+                        // 추가 날짜 정보는 현재 시즌에 포함
+                    } else if (dateColumns.length >= 2 && !currentSeasonData) {
+                        // 시즌 번호가 없지만 날짜가 있는 경우 (기본 시즌 번호 사용)
+                        const startDate = this.parseSimpleDate(dateColumns[0]);
+                        const endDate = this.parseSimpleDate(dateColumns[1]);
+
+                        if (startDate && endDate) {
+                            const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+                            const hasPeakTime = daysDiff >= 5;
+                            const defaultSeasonNumber = seasons.length + 1;
+
+                            currentSeasonData = {
+                                startDate: startDate,
+                                endDate: endDate,
+                                daysDiff: daysDiff,
+                                hasPeakTime: hasPeakTime,
+                                seasonNumber: defaultSeasonNumber
+                            };
+                            console.log(`기본 시즌 번호로 시즌 ${defaultSeasonNumber} 시작:`, currentSeasonData);
                         }
                     }
+                }
+
+                // 마지막 시즌 저장
+                if (currentSeasonData) {
+                    seasons.push(currentSeasonData);
+                    console.log(`마지막 시즌 ${currentSeasonData.seasonNumber} 완료:`, currentSeasonData);
                 }
 
                 console.log('파싱된 시즌 수:', seasons.length);
@@ -407,14 +439,14 @@
 
             parseSimpleDate(dateStr) {
                 console.log('날짜 파싱 시작:', dateStr);
-                
+
                 // 다양한 날짜 형식 지원
                 let match = dateStr.match(/^(\d{1,2})\/(\d{1,2})/);
                 if (!match) {
                     // 다른 형식 시도 (예: 9-26, 9.26 등)
                     match = dateStr.match(/^(\d{1,2})[-\/\.](\d{1,2})/);
                 }
-                
+
                 if (!match) {
                     console.log('날짜 형식을 인식할 수 없음:', dateStr);
                     return null;
