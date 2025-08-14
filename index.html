@@ -316,7 +316,6 @@
                 console.log('기획서 파싱 시작');
                 const lines = text.trim().split('\n');
                 const seasons = [];
-                let currentSeason = null;
                 let currentSeasonData = null;
 
                 for (let i = 0; i < lines.length; i++) {
@@ -327,7 +326,7 @@
 
                     // 들여쓰기 확인 (탭이나 공백으로 시작하는지)
                     const isIndented = line.startsWith('\t') || /^\s+/.test(line);
-                    
+
                     // 다양한 구분자로 분리 (탭, 연속된 공백, 콤마)
                     let parts = [];
                     if (line.includes('\t')) {
@@ -374,7 +373,7 @@
 
                     console.log('찾은 날짜 컬럼:', dateColumns);
 
-                    // 새로운 시즌 시작 조건
+                    // 새로운 시즌 시작 조건 (시즌 번호가 있고 날짜가 2개 이상이며 들여쓰기가 아닌 경우)
                     if (seasonNumber && dateColumns.length >= 2 && !isIndented) {
                         // 이전 시즌이 있으면 저장
                         if (currentSeasonData) {
@@ -400,12 +399,12 @@
                             };
                             console.log(`새 시즌 ${seasonNumber} 시작:`, currentSeasonData);
                         }
-                    } else if (isIndented && currentSeasonData && dateColumns.length > 0) {
+                    } else if (isIndented && dateColumns.length > 0) {
                         // 들여쓰기된 라인에서 추가 날짜 정보 처리
-                        console.log(`시즌 ${currentSeasonData.seasonNumber}에 추가 날짜 정보 추가:`, dateColumns);
-                        // 추가 날짜 정보는 현재 시즌에 포함
-                    } else if (dateColumns.length >= 2 && !currentSeasonData) {
-                        // 시즌 번호가 없지만 날짜가 있는 경우 (기본 시즌 번호 사용)
+                        console.log(`들여쓰기된 라인에서 날짜 발견:`, dateColumns);
+                        // 들여쓰기된 라인의 날짜는 현재 시즌에 포함하지 않음 (추가 정보로만 사용)
+                    } else if (dateColumns.length >= 2 && !currentSeasonData && !isIndented) {
+                        // 시즌 번호가 없지만 날짜가 있고 들여쓰기가 아닌 경우 (기본 시즌 번호 사용)
                         const startDate = this.parseSimpleDate(dateColumns[0]);
                         const endDate = this.parseSimpleDate(dateColumns[1]);
 
