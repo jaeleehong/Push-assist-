@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +24,7 @@
             margin: 0 auto;
             background: white;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
 
@@ -103,7 +104,7 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         .btn:disabled {
@@ -116,7 +117,7 @@
             background: white;
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             display: none;
         }
 
@@ -178,6 +179,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header class="header">
@@ -200,10 +202,11 @@
                 <button id="generateBtn" class="btn">푸시 메시지 생성</button>
                 <button id="clearBtn" class="btn">초기화</button>
                 <button id="exampleBtn" class="btn">예시 보기</button>
-                
+
                 <div id="status" class="status info" style="display: none;"></div>
-                
-                <div id="exampleSection" style="display: none; margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+
+                <div id="exampleSection"
+                    style="display: none; margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
                     <h3>📋 사용방법</h3>
                     <ol style="margin: 10px 0; padding-left: 20px;">
                         <li><strong>주제어 입력</strong>: 해당 월의 시즌레이스 주제를 입력하세요 (예: 더위사냥, 로맨틱, 추석맞고 등)</li>
@@ -211,20 +214,21 @@
                         <li><strong>붙여넣기</strong>: 복사한 내용을 텍스트 영역에 붙여넣으세요</li>
                         <li><strong>생성</strong>: "푸시 메시지 생성" 버튼을 클릭하세요</li>
                     </ol>
-                    
+
                     <h3>📝 기획서 예시</h3>
-                    <div style="background: white; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 14px; margin: 10px 0;">
-                        1회차	9/25	9/27	더위사냥<br>
-                        2회차	9/25	9/27	더위사냥<br>
-                        3회차	10/2	10/4	더위사냥<br>
-                        4회차	10/2	10/4	더위사냥<br>
-                        5회차	10/9	10/11	더위사냥<br>
-                        6회차	10/9	10/11	더위사냥<br>
-                        7회차	10/16	10/18	더위사냥<br>
-                        8회차	10/16	10/18	더위사냥<br>
-                        9회차	10/23	10/25	더위사냥
+                    <div
+                        style="background: white; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 14px; margin: 10px 0;">
+                        1회차 9/25 9/27 더위사냥<br>
+                        2회차 9/25 9/27 더위사냥<br>
+                        3회차 10/2 10/4 더위사냥<br>
+                        4회차 10/2 10/4 더위사냥<br>
+                        5회차 10/9 10/11 더위사냥<br>
+                        6회차 10/9 10/11 더위사냥<br>
+                        7회차 10/16 10/18 더위사냥<br>
+                        8회차 10/16 10/18 더위사냥<br>
+                        9회차 10/23 10/25 더위사냥
                     </div>
-                    
+
                     <h3>🎯 자동 생성되는 메시지</h3>
                     <ul style="margin: 10px 0; padding-left: 20px;">
                         <li><strong>시작 푸시</strong>: 목요일 오후 6시 (전체 대상)</li>
@@ -271,7 +275,7 @@
                 this.clearBtn.addEventListener('click', () => this.clearForm());
                 this.copyBtn.addEventListener('click', () => this.copyToClipboard());
                 this.downloadBtn.addEventListener('click', () => this.downloadCSV());
-                
+
                 // 예시 버튼 이벤트 추가
                 const exampleBtn = document.getElementById('exampleBtn');
                 if (exampleBtn) {
@@ -296,50 +300,95 @@
                     if (!line) continue;
 
                     console.log(`라인 ${i + 1}:`, line);
-                    
-                    // 여러 가지 구분자로 시도
-                    let parts = [];
-                    
-                    // 1. 탭으로 분리 시도
-                    if (line.includes('\t')) {
-                        parts = line.split('\t').map(part => part.trim()).filter(part => part);
-                    }
-                    // 2. 공백으로 분리 시도 (연속된 공백을 하나로 처리)
-                    else {
-                        parts = line.split(/\s+/).map(part => part.trim()).filter(part => part);
-                    }
-                    
-                    console.log(`라인 ${i + 1} 분리 결과:`, parts);
 
-                    // 날짜 패턴 찾기
-                    const dateTimePattern = /^\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}$/;
-                    const dateOnlyPattern = /^\d{1,2}\/\d{1,2}$/;
+                    // race_chocolate 형식 처리
+                    if (line.includes('race_chocolate')) {
+                        const parts = line.split(/\s+/).map(part => part.trim()).filter(part => part);
+                        console.log(`race_chocolate 라인 ${i + 1} 분리 결과:`, parts);
 
-                    const dateColumns = parts.filter(part => {
-                        return dateTimePattern.test(part) || dateOnlyPattern.test(part);
-                    });
-                    
-                    console.log(`라인 ${i + 1} 날짜 컬럼:`, dateColumns);
+                        // race_chocolate 다음에 오는 숫자 찾기 (시즌 번호)
+                        const seasonNumberMatch = parts.find(part => /^\d+$/.test(part));
+                        if (seasonNumberMatch) {
+                            console.log(`시즌 번호 발견: ${seasonNumberMatch}`);
+                        }
 
-                    if (dateColumns.length >= 2) {
-                        const startDate = this.parseSimpleDate(dateColumns[0]);
-                        const endDate = this.parseSimpleDate(dateColumns[1]);
-                        
-                        console.log(`라인 ${i + 1} 파싱된 날짜:`, { startDate, endDate });
-                        
-                        if (startDate && endDate) {
-                            const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
-                            const hasPeakTime = daysDiff >= 5;
+                        // 날짜 패턴 찾기 (시간 포함)
+                        const dateTimePattern = /^\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}$/;
+                        const dateOnlyPattern = /^\d{1,2}\/\d{1,2}$/;
 
-                            currentSeason = {
-                                startDate: startDate,
-                                endDate: endDate,
-                                daysDiff: daysDiff,
-                                hasPeakTime: hasPeakTime,
-                                seasonNumber: seasons.length + 1
-                            };
-                            seasons.push(currentSeason);
-                            console.log(`시즌 ${currentSeason.seasonNumber} 추가:`, currentSeason);
+                        const dateColumns = parts.filter(part => {
+                            return dateTimePattern.test(part) || dateOnlyPattern.test(part);
+                        });
+
+                        console.log(`race_chocolate 라인 ${i + 1} 날짜 컬럼:`, dateColumns);
+
+                        if (dateColumns.length >= 2) {
+                            // 첫 번째와 두 번째 날짜를 시작일과 종료일로 사용
+                            const startDate = this.parseSimpleDate(dateColumns[0]);
+                            const endDate = this.parseSimpleDate(dateColumns[1]);
+
+                            console.log(`race_chocolate 라인 ${i + 1} 파싱된 날짜:`, { startDate, endDate });
+
+                            if (startDate && endDate) {
+                                const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+                                const hasPeakTime = daysDiff >= 5;
+
+                                currentSeason = {
+                                    startDate: startDate,
+                                    endDate: endDate,
+                                    daysDiff: daysDiff,
+                                    hasPeakTime: hasPeakTime,
+                                    seasonNumber: seasons.length + 1
+                                };
+                                seasons.push(currentSeason);
+                                console.log(`시즌 ${currentSeason.seasonNumber} 추가:`, currentSeason);
+                            }
+                        }
+                    } else {
+                        // 기존 로직 (race_chocolate가 없는 경우)
+                        let parts = [];
+
+                        // 1. 탭으로 분리 시도
+                        if (line.includes('\t')) {
+                            parts = line.split('\t').map(part => part.trim()).filter(part => part);
+                        }
+                        // 2. 공백으로 분리 시도 (연속된 공백을 하나로 처리)
+                        else {
+                            parts = line.split(/\s+/).map(part => part.trim()).filter(part => part);
+                        }
+
+                        console.log(`일반 라인 ${i + 1} 분리 결과:`, parts);
+
+                        // 날짜 패턴 찾기
+                        const dateTimePattern = /^\d{1,2}\/\d{1,2}\s+\d{1,2}:\d{2}$/;
+                        const dateOnlyPattern = /^\d{1,2}\/\d{1,2}$/;
+
+                        const dateColumns = parts.filter(part => {
+                            return dateTimePattern.test(part) || dateOnlyPattern.test(part);
+                        });
+
+                        console.log(`일반 라인 ${i + 1} 날짜 컬럼:`, dateColumns);
+
+                        if (dateColumns.length >= 2) {
+                            const startDate = this.parseSimpleDate(dateColumns[0]);
+                            const endDate = this.parseSimpleDate(dateColumns[1]);
+
+                            console.log(`일반 라인 ${i + 1} 파싱된 날짜:`, { startDate, endDate });
+
+                            if (startDate && endDate) {
+                                const daysDiff = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+                                const hasPeakTime = daysDiff >= 5;
+
+                                currentSeason = {
+                                    startDate: startDate,
+                                    endDate: endDate,
+                                    daysDiff: daysDiff,
+                                    hasPeakTime: hasPeakTime,
+                                    seasonNumber: seasons.length + 1
+                                };
+                                seasons.push(currentSeason);
+                                console.log(`시즌 ${currentSeason.seasonNumber} 추가:`, currentSeason);
+                            }
                         }
                     }
                 }
@@ -355,25 +404,25 @@
                 const month = parseInt(match[1]) - 1;
                 const day = parseInt(match[2]);
                 const currentYear = new Date().getFullYear();
-                
+
                 const date = new Date(currentYear, month, day);
-                
+
                 // 만약 날짜가 과거라면 다음 해로 설정
                 if (date < new Date()) {
                     date.setFullYear(currentYear + 1);
                 }
-                
+
                 return date;
             }
 
             generatePushMessagesForSeasons(seasons, themeKeyword) {
                 const pushMessages = [];
-                
+
                 seasons.forEach(season => {
                     const messages = this.generateMessagesForSeason(season, themeKeyword);
                     pushMessages.push(...messages);
                 });
-                
+
                 return pushMessages;
             }
 
@@ -381,7 +430,7 @@
                 const messages = [];
                 const startDate = new Date(season.startDate);
                 const endDate = new Date(season.endDate);
-                
+
                 // 시작일이 목요일인지 확인하고 조정
                 let thursdayDate = new Date(startDate);
                 while (thursdayDate.getDay() !== 4) { // 4 = 목요일
@@ -510,7 +559,7 @@
 
             generatePushMessages() {
                 console.log('푸시 메시지 생성 시작');
-                
+
                 const themeKeyword = this.themeKeywordInput.value.trim();
                 const planningText = this.planningTextInput.value.trim();
 
@@ -528,20 +577,20 @@
                     const seasons = this.parsePlanningText(planningText);
                     console.log('파싱된 시즌 수:', seasons.length);
                     console.log('시즌 데이터:', seasons);
-                    
+
                     if (seasons.length === 0) {
                         this.showStatus('❌ 기획서에서 날짜를 찾을 수 없습니다. 형식을 확인해주세요. 예시: 1회차 9/25 9/27 더위사냥', 'error');
                         return;
                     }
-                    
+
                     const pushMessages = this.generatePushMessagesForSeasons(seasons, themeKeyword);
                     console.log('생성된 푸시 메시지 수:', pushMessages.length);
                     console.log('푸시 메시지 데이터:', pushMessages);
-                    
+
                     this.currentPushMessages = pushMessages;
                     this.displayResults(pushMessages);
                     this.resultSection.style.display = 'block';
-                    
+
                     this.showStatus(`✅ ${pushMessages.length}개의 푸시 메시지가 생성되었습니다!`, 'success');
                     console.log('푸시 메시지 생성 완료');
                 } catch (error) {
@@ -568,7 +617,7 @@
                 Object.keys(seasonGroups).forEach(season => {
                     const messages = seasonGroups[season];
                     const rowspan = messages.length;
-                    
+
                     messages.forEach((msg, index) => {
                         html += '<tr>';
                         if (index === 0) {
@@ -598,7 +647,7 @@
             toggleExample() {
                 const exampleSection = document.getElementById('exampleSection');
                 const exampleBtn = document.getElementById('exampleBtn');
-                
+
                 if (exampleSection.style.display === 'none') {
                     exampleSection.style.display = 'block';
                     exampleBtn.textContent = '예시 숨기기';
@@ -623,14 +672,14 @@
                 const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
                 const link = document.createElement('a');
                 const url = URL.createObjectURL(blob);
-                
+
                 link.setAttribute('href', url);
                 link.setAttribute('download', `시즌레이스_푸시메시지_${new Date().toISOString().split('T')[0]}.csv`);
                 link.style.visibility = 'hidden';
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
-                
+
                 this.showStatus('✅ CSV 파일이 다운로드되었습니다!', 'success');
             }
 
@@ -638,10 +687,10 @@
                 if (!this.currentPushMessages || this.currentPushMessages.length === 0) {
                     return '';
                 }
-                
+
                 let csv = [];
                 csv.push('"차수","일자","발송일","대상","제목","내용","데이터"');
-                
+
                 this.currentPushMessages.forEach(msg => {
                     const row = [
                         `"${msg.season}"`,
@@ -654,7 +703,7 @@
                     ];
                     csv.push(row.join(','));
                 });
-                
+
                 return csv.join('\n');
             }
         }
@@ -665,7 +714,7 @@
             try {
                 const generator = new SeasonRacePushGenerator();
                 console.log('SeasonRacePushGenerator 초기화 완료');
-                
+
                 // 초기화 확인
                 if (generator.themeKeywordInput && generator.planningTextInput && generator.generateBtn) {
                     console.log('모든 요소가 정상적으로 로드됨');
@@ -681,7 +730,7 @@
         });
 
         // 전역 오류 핸들러
-        window.addEventListener('error', function(e) {
+        window.addEventListener('error', function (e) {
             console.error('전역 오류:', e.error);
             const status = document.getElementById('status');
             if (status) {
@@ -692,4 +741,5 @@
         });
     </script>
 </body>
-</html> 
+
+</html>
